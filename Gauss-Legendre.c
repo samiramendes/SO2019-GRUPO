@@ -31,3 +31,8 @@ double pi(int n)
 
     return pi;
 }
+
+int main (){
+    printf("pi: %f\n",pi(100));
+    return 0;    
+}
