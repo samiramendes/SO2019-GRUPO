@@ -2,54 +2,32 @@
 #include <stdlib.h>
 #include <math.h>
 
-//funções usadas no algoritmo
-double a(int n);
-double b(int n);
-double t(int n);
-double p(int n);
+double pi(int n)
+{
+    double a, b, t, p;
+    double pi, aux;
+    double aprox, bprox, tprox, pprox;
 
-double a(int n){
-    if(n==0){
-        return 1;
+    a = 1; // a0 = 1
+    b = 1 / sqrt(2); // b0 = 1/sqrt(2)
+    t = 0.25; // t0 = 0.25
+    p = 1; // p0 = 1
+
+    for (int i = 0; i < n; i++)
+    {
+        aprox = (a + b) / 2; // a(n+1) = (a(n)+b(n))/2
+        bprox = sqrt(a * b); // b(n+1) = sqrt(b(n)*a(n))
+        aux = a - aprox;
+        tprox = t - (p * pow(aux, 2)); // t(n+1) = t(n)-p(n)*(a(n)-a(n+1))²
+        pprox = 2 * p;                 // p(n) = 2*p(n-1)
+
+        // os valores de a,b,t e p são atualizados
+        a = aprox;
+        b = bprox;
+        t = tprox;
+        p = pprox;
     }
-    else{
-        return(a(n-1)+b(n-1))/2;
-    }
+    pi = pow(a + b, 2) / (4 * t);
+
+    return pi;
 }
-
-double b(int n){
-    if(n==0){
-        return 1/sqrt(2);
-    }
-    else{
-        return sqrt(a(n-1)*b(n-1));
-    }
-}
-
-double p(int n){
-    if(n==0){
-        return 1;
-    }
-    else {
-        return 2*p(n-1);
-    }
-}
-
-double t(int n){
-    if(n==0){
-        return 0.25;
-    }
-    else{
-        return t(n-1)-p(n-1)*pow(a(n-1)-a(n),2);
-    }
-}
-
-double pi(int n){
-    return pow(a(n)+b(n),2)/(4*t(n));
-}
-
-int main(){
-    printf("%f", pi(10));
-    getchar();
-}
-

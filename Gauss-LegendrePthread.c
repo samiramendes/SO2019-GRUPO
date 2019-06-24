@@ -1,4 +1,4 @@
-// Compilar usando gcc MonteCarloPthreads.c -o MonteCarloPthreads -lm -lgmp -lpthread
+// Compilar usando gcc GaussLegendrePthreads.c -o GaussLegendrePthreads -lm -lgmp -lpthread
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,52 +10,77 @@
 
 void *calc(void *n)
 {
-    mpf_set_default_prec(pow(10, 5)); // Definindo a precisão
+    int it = 25; // número de iterações
 
-    // Inicialização das variáveis
-    double x, y;         // Coordenadas do dardo
-    double d;            // Distância do dardo ao centro
-    int i;               // Auxiliar usada para iteração no for
-    int it = 1000; // Número de iterações
+    // Declaração das variáveis do tipo mpf_t
+    mpf_t a, b, t, p;
+    mpf_t aux;
+    mpf_t aprox, bprox, tprox, pprox;
+    mpf_t *pi;
 
-    mpf_t dentro;                        // Número de dardos dentro do círculo
-    mpf_t dardos;                        // Número total de dados lançados
-    mpf_t *pi;                           // Número calculado de pi
     pi = (mpf_t *)malloc(sizeof(mpf_t)); // pi é alocado na heap
 
     // Inicialização das variáveis do tipo mpf_t
-    mpf_init(dentro);
-    mpf_init(dardos);
+    mpf_init_set_ui(a, 1);
+    mpf_init_set_d(b, 1 / sqrt(2));
+    mpf_init_set_d(t, 0.25);
+    mpf_init_set_ui(p, 1);
+
+    mpf_init(aux);
+    mpf_init(aprox);
+    mpf_init(bprox);
+    mpf_init(tprox);
+    mpf_init(pprox);
     mpf_init(*pi);
 
-    srand(time(NULL)); // Inicialização do gerador de números aleatórios
-
-    for (i = 0; i < it; i++) // Neste ponto é definido o número de iterações
+    for (int i = 0; i < it; i++)
     {
-        // Calcula um ponto (x,y) com coordenadas entre 0 e 1
-        x = drand48();
-        y = drand48();
+        // a(n+1) = (a(n)+b(n))/2
+        mpf_add(aprox, a, b);
+        mpf_div_ui(aprox, aprox, 2);
 
-        d = sqrt(x * x + y * y); // Calcula a distância do ponto (x,y) até o centro (0,0)
+        // b(n+1) = sqrt(b(n)*a(n))
+        mpf_mul(bprox, b, a);
+        mpf_sqrt(bprox, bprox);
 
-        mpf_add_ui(dardos, dardos, 1);
+        // t(n+1) = t(n)-p(n)*(a(n)-a(n+1))²
+        mpf_sub(tprox, a, aprox);    // a(n)-a(n+1)
+        mpf_pow_ui(tprox, tprox, 2); // (a(n)-a(n+1))²
+        mpf_mul(tprox, p, tprox);    // p(n)*(a(n)-a(n+1))²
+        mpf_sub(tprox, t, tprox);    // t(n)-p(n)*(a(n)-a(n+1))²
 
-        if (d <= 1)
-        {                                  // Se a distância é menor que 1, o ponto (x,y) pertence ao círculo de raio 1
-            mpf_add_ui(dentro, dentro, 1); // dentro++;
-        }
+        // p(n) = 2*p(n-1)
+        mpf_mul_ui(pprox, p, 2);
+
+        // os valores de a,b,t e p são atualizados
+        mpf_add_ui(a, aprox, 0);
+        mpf_add_ui(b, bprox, 0);
+        mpf_add_ui(t, tprox, 0);
+        mpf_add_ui(p, pprox, 0);
     }
 
-    gmp_printf("dardos: %.6Ff\ndentro: %.6Ff\n", dardos, dentro);
+    // pi = (a(n-1)+b(n-1))²/4*t(n-1)
+    mpf_add(*pi, a, b);
+    mpf_pow_ui(*pi, *pi, 2);
 
-    mpf_mul_ui(dentro, dentro, 4); // 4*dentro/dardos
-    mpf_div(*pi, dentro, dardos);
+    mpf_mul_ui(aux, t, 4);
 
-    //Liberação do espaço de memória antes alocado
-    mpf_clear(dentro);
-    mpf_clear(dardos);
+    mpf_div(*pi, *pi, aux);
 
-    return pi; // retorna o valor de pi
+    gmp_printf("pi: %.6Ff\n", *pi); // Printa o valor de pi
+
+    // Liberação da memória alocada p/ as varáveis do tipo mpf_t
+    mpf_clear(a);
+    mpf_clear(b);
+    mpf_clear(t);
+    mpf_clear(p);
+    mpf_clear(aux);
+    mpf_clear(aprox);
+    mpf_clear(bprox);
+    mpf_clear(tprox);
+    mpf_clear(pprox);
+
+    return pi;
 }
 
 pthread_t CallThread(char *name) // Função que cria a thread e retorna o seu id
@@ -153,4 +178,9 @@ int main()
 
     // Liberação do espaço de memória antes alocado
     mpf_clear(pi);
+
+    free(calc_valueA);
+    free(calc_valueB);
+    free(calc_valueC);
+    free(calc_valueD);
 }
