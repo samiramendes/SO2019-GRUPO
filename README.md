@@ -7,11 +7,11 @@ Para execução dos códigos sequenciais sem a implementação de big numbers, b
 
 Para execução dos códigos sequenciais com a implementação de big numbers, basta usar o comando:
 
--gcc program.c -o program -lm -lgmp
+- gcc program.c -o program -lm -lgmp
 
 Para execução dos códigos paralelos com a implementação de big numbers, basta usar o comando:
 
--gcc program.c -o program -lm -lgmp -lpthread
+- gcc program.c -o program -lm -lgmp -lpthread
 
 
 
