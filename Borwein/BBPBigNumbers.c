@@ -12,7 +12,7 @@ void main()
 
 	// Inicialização das variáveis
 	int i;
-	int n = 1000000;
+	int n = 10000000;
 
 	// Declaração das variáveis do tipo mpf_t
 	mpf_t pi, aux;
@@ -21,9 +21,18 @@ void main()
 	mpf_t oito, dezesseis;
 
 	// Inicialização das variáveis do tipo mpf_t
-	mpf_inits(pi, aux);
-	mpf_inits(aux_a, aux_b, aux_c, aux_d, aux_e);
-	mpf_inits(a, b, c, d, e);
+	mpf_init(pi);
+	mpf_init(aux);
+	mpf_init(aux_a);
+	mpf_init(aux_b);
+	mpf_init(aux_c);
+	mpf_init(aux_d);
+	mpf_init(aux_e);
+	mpf_init(a);
+	mpf_init(b);
+	mpf_init(c);
+	mpf_init(d);
+	mpf_init(e);
 	mpf_init_set_ui(oito, 8);
 	mpf_init_set_ui(dezesseis, 16);
 

@@ -26,6 +26,6 @@ double pi(int n)
 
 int main()
 {
-    printf("%f", pi(10));
+    printf("%f\n", pi(100000000));
     return 0;
 }

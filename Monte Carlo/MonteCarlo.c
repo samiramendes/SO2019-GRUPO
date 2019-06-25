@@ -29,7 +29,7 @@ double pi(int n)
 
 int main()
 {
-	printf("Valor estimado de PI: %lf\n", pi(1000));
+	printf("Valor estimado de PI: %.6lf\n", pi(100000000));
 	return 0;
 }
 

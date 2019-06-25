@@ -16,7 +16,7 @@ void *calc(void *n)
     double x, y;         // Coordenadas do dardo
     double d;            // Distância do dardo ao centro
     int i;               // Auxiliar usada para iteração no for
-    int it = 1000; // Número de iterações
+    int it = 100000000; // Número de iterações
 
     mpf_t dentro;                        // Número de dardos dentro do círculo
     mpf_t dardos;                        // Número total de dados lançados
@@ -46,7 +46,7 @@ void *calc(void *n)
         }
     }
 
-    gmp_printf("dardos: %.6Ff\ndentro: %.6Ff\n", dardos, dentro);
+    // gmp_printf("dardos: %.6Ff\ndentro: %.6Ff\n", dardos, dentro);
 
     mpf_mul_ui(dentro, dentro, 4); // 4*dentro/dardos
     mpf_div(*pi, dentro, dardos);

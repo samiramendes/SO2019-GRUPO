@@ -190,7 +190,7 @@ int main()
 		mpf_add(pi, pi, aux);
 	}
 
-	gmp_printf("pi: %.30Ff\n", pi);
+	gmp_printf("pi: %.6Ff\n", pi);
 
 	// Liberação da memória
 
