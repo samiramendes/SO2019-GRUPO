@@ -1,0 +1,21 @@
+Call thread name: A
+Thread A iniciada com sucesso!
+Call thread name: B
+Thread B iniciada com sucesso!
+Call thread name: C
+Thread C iniciada com sucesso!
+Call thread name: D
+Thread D iniciada com sucesso!
+Chama o join A
+Fez o join A
+Thread A finalizada com sucesso!
+Chama o join B
+Fez o join B
+Thread B finalizada com sucesso!
+Chama o join C
+Fez o join C
+Thread C finalizada com sucesso!
+Chama o join D
+Fez o join D
+Thread D finalizada com sucesso!
+pi: 3.141593

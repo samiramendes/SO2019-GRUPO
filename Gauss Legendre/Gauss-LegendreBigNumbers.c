@@ -5,7 +5,7 @@
 
 int main()
 {
-    int n = 25; // número de iterações
+    int n = 200; // número de iterações
 
     // Declaração das variáveis do tipo mpf_t
     mpf_t a, b, t, p;

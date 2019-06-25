@@ -10,7 +10,7 @@
 
 void *calc(void *n)
 {
-    int it = 25; // número de iterações
+    int it = 200; // número de iterações
 
     // Declaração das variáveis do tipo mpf_t
     mpf_t a, b, t, p;
@@ -67,7 +67,7 @@ void *calc(void *n)
 
     mpf_div(*pi, *pi, aux);
 
-    gmp_printf("pi: %.6Ff\n", *pi); // Printa o valor de pi
+    // gmp_printf("pi: %.6Ff\n", *pi); // Printa o valor de pi
 
     // Liberação da memória alocada p/ as varáveis do tipo mpf_t
     mpf_clear(a);
@@ -162,10 +162,10 @@ int main()
     mpf_t *calc_valueC = (mpf_t *)outC;
     mpf_t *calc_valueD = (mpf_t *)outD;
 
-    gmp_printf("A: %6Ff\n", *calc_valueA);
-    gmp_printf("B: %6Ff\n", *calc_valueB);
-    gmp_printf("C: %6Ff\n", *calc_valueC);
-    gmp_printf("D: %6Ff\n", *calc_valueD);
+    // gmp_printf("A: %6Ff\n", *calc_valueA);
+    // gmp_printf("B: %6Ff\n", *calc_valueB);
+    // gmp_printf("C: %6Ff\n", *calc_valueC);
+    // gmp_printf("D: %6Ff\n", *calc_valueD);
 
     // É feita uma média dos resultados de pi calculados em cada thread
     mpf_add(pi, *calc_valueA, *calc_valueB);
